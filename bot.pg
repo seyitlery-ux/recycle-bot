@@ -1,0 +1,38 @@
+import discord
+from discord.ext import commands
+
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+recycle_items = ["plastik", "kağıt", "cam", "metal", "aliminyum", "karton", "teneke"]
+compost_items = ["yiyecek", "meyve", "sebze", "yaprak", "kahve", "çay", "ekmek"]
+trash_items = ["foam", "seramik", "peçete", "kıyafet", "sigara", "pil"]   
+
+
+
+async def on_ready():
+    print(f"♻️{bot.user} geri dönüşüme hazır")
+
+async def recycle(ctx, *, item: str):
+    item = item.lower().strip()
+
+ if any(word in item for word in recycle_items):
+        await ctx.send(f"🟢 `{item}` buraya gitmeli: **Geri Dönüşüm**!")
+    elif any(word in item for word in compost_items):
+        await ctx.send(f"🟤 `{item}` buraya gitmeli: **Bitkisel** 🌿")
+    elif any(word in item for word in trash_items):
+        await ctx.send(f"⚫ `{item}` buraya gitmeli: **Genel Atık** 🗑️")
+    else:
+        await ctx.send(f"🤔 Bu `{item}`'nin nereye gittiğini bilmiyorum. Lütfen geri-dönüşüm rehberini kontrol et.")
+
+
+bot.run("key")
+
+
+
+
+
+
+
+
